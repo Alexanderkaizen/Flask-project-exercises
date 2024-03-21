@@ -3,8 +3,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 
 app = Flask(__name__)
-
-app.config['SECRET_KEY'] = 'clave_secreta'
+app.template_folder = 'templates'
+app.config['SECRET_KEY'] = 'clavessecreta'
 
 class Formulario(FlaskForm):
     nombre = StringField('Nombre')
@@ -13,14 +13,14 @@ class Formulario(FlaskForm):
 @app.route('/', methods=['GET','POST'])
 def principal():
     nombre = ''
-    enviar = False
+    enviado = False
     formulario = Formulario()
     
     if formulario.validate_on_submit():
-        enviar = True
+        enviado = True
         nombre = formulario.nombre.data
         formulario.nombre.data = ''
-    return render_template('index.html', enviar=enviado,nombre= nombre, formulario = formulario)
+    return render_template('app_10_formulario.html', enviar=enviado,nombre= nombre, formulario = formulario)
 
 if __name__ == '__main__':
-    app.run(debug= True)
+    app.run(debug= True, port= 5001)
